@@ -1,3 +1,3 @@
-# Swift-Networking
+# Swift Networking
 
-A description of this package.
+A playground of networking in Swift
