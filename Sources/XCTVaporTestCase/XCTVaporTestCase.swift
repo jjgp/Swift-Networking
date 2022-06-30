@@ -1,3 +1,4 @@
+@testable import App
 @_exported import XCTVapor
 
 open class XCTVaporTestCase: XCTVaporTests {
@@ -7,14 +8,8 @@ open class XCTVaporTestCase: XCTVaporTests {
         super.setUp()
         XCTVapor.app = {
             let app = Application(.testing)
-
-            // TODO: replace with configure call
-            app.get("hello") { _ in
-                "Hello, world."
-            }
-
+            try configure(app)
             try app.start()
-
             return app
         }
     }

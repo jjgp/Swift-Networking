@@ -14,22 +14,39 @@ let package = Package(
         .package(url: "https://github.com/Alamofire/Alamofire.git", .upToNextMajor(from: "5.6.1")),
     ],
     targets: [
-        .testTarget(
-            name: "AlamofireTests",
+        .executableTarget(
+            name: "Run",
             dependencies: [
-                .product(name: "Alamofire", package: "Alamofire"),
+                .target(name: "App"),
             ]
         ),
-        .testTarget(
-            name: "URLSessionTests",
+        .target(
+            name: "App",
             dependencies: [
-                "XCTVaporTestCase",
+                .product(name: "Vapor", package: "vapor"),
+            ],
+            swiftSettings: [
+                .unsafeFlags(["-cross-module-optimization"], .when(configuration: .release)),
             ]
         ),
         .target(
             name: "XCTVaporTestCase",
             dependencies: [
+                .target(name: "App"),
                 .product(name: "XCTVapor", package: "vapor"),
+            ]
+        ),
+        .testTarget(
+            name: "AlamofireTests",
+            dependencies: [
+                .product(name: "Alamofire", package: "Alamofire"),
+                .target(name: "XCTVaporTestCase"),
+            ]
+        ),
+        .testTarget(
+            name: "URLSessionTests",
+            dependencies: [
+                .target(name: "XCTVaporTestCase"),
             ]
         ),
     ]
