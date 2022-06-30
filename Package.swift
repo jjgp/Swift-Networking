@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "Swift-Networking",
     platforms: [
-        .macOS(.v10_15),
+        .macOS(.v12),
     ],
     products: [],
     dependencies: [
@@ -23,7 +23,13 @@ let package = Package(
         .testTarget(
             name: "URLSessionTests",
             dependencies: [
-                .product(name: "Vapor", package: "vapor"),
+                "XCTVaporTestCase",
+            ]
+        ),
+        .target(
+            name: "XCTVaporTestCase",
+            dependencies: [
+                .product(name: "XCTVapor", package: "vapor"),
             ]
         ),
     ]
